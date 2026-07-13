@@ -1,13 +1,10 @@
 import dotenv from "dotenv";
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import QRCode from "qrcode";
 
 dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const knowledgePath = findKnowledgePath();
 
 const corpus = loadCorpus();
@@ -162,8 +159,8 @@ function providerConfigs() {
 function findKnowledgePath() {
   const candidates = [
     path.join(process.cwd(), "data", "cyber_syndrome_knowledge.json"),
-    path.join(__dirname, "..", "..", "data", "cyber_syndrome_knowledge.json"),
-    path.join(__dirname, "..", "..", "..", "data", "cyber_syndrome_knowledge.json"),
+    path.join(process.cwd(), "cyber-syndrome-consult", "data", "cyber_syndrome_knowledge.json"),
+    path.join("/var/task", "data", "cyber_syndrome_knowledge.json"),
   ];
   return candidates.find((candidate) => fs.existsSync(candidate)) || candidates[0];
 }
