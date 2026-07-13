@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>网络综合征咨询</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-panel">
+        <section class="brand-block" aria-labelledby="app-title">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div>
+            <p class="eyebrow">Cyber-Syndrome</p>
+            <h1 id="app-title">网络综合征咨询</h1>
+          </div>
+        </section>
+
+        <section class="control-section" aria-labelledby="model-title">
+          <div class="section-header">
+            <h2 id="model-title">模型</h2>
+            <span id="model-status" class="status-chip">读取中</span>
+          </div>
+          <div id="provider-list" class="provider-list" role="tablist" aria-label="模型选择"></div>
+        </section>
+
+        <section class="visual-section" aria-label="CPST 图谱">
+          <div class="cpst-map">
+            <div class="cpst-core">CPST</div>
+            <div class="cpst-node cyber">Cyber</div>
+            <div class="cpst-node physical">Physical</div>
+            <div class="cpst-node social">Social</div>
+            <div class="cpst-node thinking">Thinking</div>
+          </div>
+        </section>
+
+        <section class="control-section" aria-labelledby="mobile-title">
+          <div class="section-header">
+            <h2 id="mobile-title">手机入口</h2>
+            <button id="copy-url" class="icon-button" type="button" title="复制地址" aria-label="复制地址">
+              <i data-lucide="copy"></i>
+            </button>
+          </div>
+          <div class="qr-wrap">
+            <img id="qr-code" alt="手机访问二维码" />
+          </div>
+          <p id="mobile-url" class="mobile-url"></p>
+        </section>
+
+        <section class="control-section" aria-labelledby="library-title">
+          <div class="section-header">
+            <h2 id="library-title">资料库</h2>
+            <span id="chunk-count" class="status-chip">0</span>
+          </div>
+          <div id="document-list" class="document-list"></div>
+        </section>
+      </aside>
+
+      <main class="chat-panel">
+        <header class="chat-header">
+          <div>
+            <p class="eyebrow">Consultation Desk</p>
+            <h2>网络综合征问答</h2>
+          </div>
+          <button id="clear-chat" class="tool-button" type="button">
+            <i data-lucide="rotate-ccw"></i>
+            <span>清空</span>
+          </button>
+        </header>
+
+        <div id="chat-provider-switcher" class="chat-provider-switcher" role="tablist" aria-label="选择大模型"></div>
+
+        <div class="prompt-row" aria-label="快捷问题">
+          <button type="button" data-prompt="请用 CPST 空间解释网络综合征是什么。">CPST 概念</button>
+          <button type="button" data-prompt="网络综合征可能有哪些表现和风险信号？">表现信号</button>
+          <button type="button" data-prompt="如果想预防网络综合征，可以从哪些方面开始？">预防建议</button>
+          <button type="button" data-prompt="请结合资料说明恢复和干预思路。">恢复思路</button>
+        </div>
+
+        <section id="chat-log" class="chat-log" aria-live="polite"></section>
+
+        <form id="chat-form" class="composer">
+          <textarea
+            id="message-input"
+            name="message"
+            rows="3"
+            placeholder="输入你的问题..."
+            autocomplete="off"
+          ></textarea>
+          <button id="send-button" class="send-button" type="submit" aria-label="发送">
+            <i data-lucide="send-horizontal"></i>
+            <span>发送</span>
+          </button>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
