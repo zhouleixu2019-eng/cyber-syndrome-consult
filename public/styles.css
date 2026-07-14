@@ -357,7 +357,7 @@ h2 {
 
 .conversation-panel {
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
   min-height: calc(100vh - 48px);
   min-height: calc(100dvh - 48px);
   padding: 18px;
@@ -373,22 +373,9 @@ h2 {
   overflow: hidden;
 }
 
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
-}
-
-.chat-header h2 {
-  font-size: 1.2rem;
-  line-height: 1.2;
-}
-
 .model-section {
-  padding: 14px 0 0;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--line);
 }
 
 .chat-provider-switcher {
@@ -461,10 +448,11 @@ h2 {
 
 .question-button {
   display: grid;
-  gap: 5px;
+  align-content: start;
+  gap: 7px;
   width: 100%;
-  min-height: 66px;
-  padding: 10px 11px;
+  min-height: 88px;
+  padding: 12px 12px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
@@ -480,7 +468,7 @@ h2 {
 
 .question-button strong {
   font-size: 0.84rem;
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
 .tool-button:hover,
@@ -607,6 +595,20 @@ h2 {
   border-top: 1px solid var(--line);
 }
 
+.composer-actions {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  align-self: end;
+  gap: 8px;
+}
+
+.composer-actions .tool-button,
+.composer-actions .send-button {
+  align-self: auto;
+  min-height: 46px;
+}
+
 .composer textarea {
   width: 100%;
   min-height: 72px;
@@ -707,14 +709,6 @@ h2 {
     padding: 16px;
   }
 
-  .chat-header {
-    align-items: flex-start;
-  }
-
-  .chat-header h2 {
-    font-size: 1.25rem;
-  }
-
   .conversation-panel,
   .question-panel,
   .brand-block,
@@ -734,6 +728,12 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .composer-actions {
+    grid-auto-flow: initial;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .clear-button,
   .send-button {
     min-height: 46px;
   }
@@ -758,16 +758,8 @@ h2 {
     font-size: 1.12rem;
   }
 
-  .chat-header {
-    gap: 10px;
-  }
-
   .tool-button {
     min-width: 42px;
     padding: 8px 10px;
-  }
-
-  .tool-button span {
-    display: none;
   }
 }

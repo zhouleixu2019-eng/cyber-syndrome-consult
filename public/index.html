@@ -96,18 +96,7 @@
       </aside>
 
       <main class="main-panel">
-        <section class="conversation-panel" aria-label="咨询对话">
-          <header class="chat-header">
-            <div>
-              <p class="eyebrow">Consultation Desk</p>
-              <h2>咨询对话</h2>
-            </div>
-            <button id="clear-chat" class="tool-button" type="button">
-              <i data-lucide="rotate-ccw"></i>
-              <span>清空</span>
-            </button>
-          </header>
-
+        <section class="conversation-panel" aria-label="网络综合征咨询">
           <section class="model-section" aria-labelledby="model-title">
             <div class="section-header">
               <h2 id="model-title">模型选择</h2>
@@ -126,10 +115,16 @@
               placeholder="输入你的问题..."
               autocomplete="off"
             ></textarea>
-            <button id="send-button" class="send-button" type="submit" aria-label="发送">
-              <i data-lucide="send-horizontal"></i>
-              <span>发送</span>
-            </button>
+            <div class="composer-actions">
+              <button id="clear-chat" class="tool-button clear-button" type="button" title="清空对话" aria-label="清空对话">
+                <i data-lucide="rotate-ccw"></i>
+                <span>清空</span>
+              </button>
+              <button id="send-button" class="send-button" type="submit" aria-label="发送">
+                <i data-lucide="send-horizontal"></i>
+                <span>发送</span>
+              </button>
+            </div>
           </form>
         </section>
 
