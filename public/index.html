@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>网络综合征咨询</title>
+    <title>网络综合征咨询平台</title>
     <link rel="stylesheet" href="/styles.css" />
     <script defer src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script defer src="/app.js"></script>
@@ -19,25 +19,57 @@
           </div>
           <div>
             <p class="eyebrow">Cyber-Syndrome</p>
-            <h1 id="app-title">网络综合征咨询</h1>
+            <h1 id="app-title">网络综合征咨询平台</h1>
           </div>
         </section>
 
-        <section class="control-section" aria-labelledby="model-title">
+        <section class="control-section lab-section" aria-labelledby="lab-title">
+          <h2 id="lab-title">网络空间数据与智能实验室</h2>
+          <a href="http://www.cybermatics.org/" target="_blank" rel="noreferrer">
+            www.cybermatics.org
+          </a>
+        </section>
+
+        <section class="control-section concept-section" aria-labelledby="concept-title">
           <div class="section-header">
-            <h2 id="model-title">模型</h2>
-            <span id="model-status" class="status-chip">读取中</span>
+            <h2 id="concept-title">网络综合征简述</h2>
           </div>
-          <div id="provider-list" class="provider-list" role="tablist" aria-label="模型选择"></div>
-        </section>
-
-        <section class="visual-section" aria-label="CPST 图谱">
-          <div class="cpst-map">
-            <div class="cpst-core">CPST</div>
-            <div class="cpst-node cyber">Cyber</div>
-            <div class="cpst-node physical">Physical</div>
-            <div class="cpst-node social">Social</div>
-            <div class="cpst-node thinking">Thinking</div>
+          <div class="concept-list">
+            <details class="concept-item">
+              <summary>
+                <span>概念</span>
+                <b>more</b>
+              </summary>
+              <p>网络综合征是个体在网络空间中过度沉浸或不当使用网络后，身心状态、社会连接和认知情绪出现多维失衡的综合现象。</p>
+            </details>
+            <details class="concept-item">
+              <summary>
+                <span>Cyber 网络空间</span>
+                <b>more</b>
+              </summary>
+              <p>表现为过度上网、游戏或社交媒体依赖，难以控制在线时间，对网络反馈和虚拟互动形成持续性依赖。</p>
+            </details>
+            <details class="concept-item">
+              <summary>
+                <span>Physical 物理空间</span>
+                <b>more</b>
+              </summary>
+              <p>常见表现包括睡眠节律紊乱、视疲劳、久坐不适、颈肩疼痛，以及因运动减少带来的体能和健康状态下降。</p>
+            </details>
+            <details class="concept-item">
+              <summary>
+                <span>Social 社会空间</span>
+                <b>more</b>
+              </summary>
+              <p>可能出现现实社交减少、家庭和同伴沟通变弱、学习或工作投入下降，以及网络冲突对现实关系的外溢影响。</p>
+            </details>
+            <details class="concept-item">
+              <summary>
+                <span>Thinking 思维空间</span>
+                <b>more</b>
+              </summary>
+              <p>常见表现包括注意力分散、情绪波动、焦虑或低落、自我调节困难，以及离线时的不适感和反复回到网络的冲动。</p>
+            </details>
           </div>
         </section>
 
@@ -63,42 +95,53 @@
         </section>
       </aside>
 
-      <main class="chat-panel">
-        <header class="chat-header">
-          <div>
-            <p class="eyebrow">Consultation Desk</p>
-            <h2>网络综合征问答</h2>
+      <main class="main-panel">
+        <section class="conversation-panel" aria-label="咨询对话">
+          <header class="chat-header">
+            <div>
+              <p class="eyebrow">Consultation Desk</p>
+              <h2>咨询对话</h2>
+            </div>
+            <button id="clear-chat" class="tool-button" type="button">
+              <i data-lucide="rotate-ccw"></i>
+              <span>清空</span>
+            </button>
+          </header>
+
+          <section class="model-section" aria-labelledby="model-title">
+            <div class="section-header">
+              <h2 id="model-title">模型选择</h2>
+              <span id="model-status" class="status-chip">读取中</span>
+            </div>
+            <div id="chat-provider-switcher" class="chat-provider-switcher" role="tablist" aria-label="选择大模型"></div>
+          </section>
+
+          <section id="chat-log" class="chat-log" aria-live="polite"></section>
+
+          <form id="chat-form" class="composer">
+            <textarea
+              id="message-input"
+              name="message"
+              rows="3"
+              placeholder="输入你的问题..."
+              autocomplete="off"
+            ></textarea>
+            <button id="send-button" class="send-button" type="submit" aria-label="发送">
+              <i data-lucide="send-horizontal"></i>
+              <span>发送</span>
+            </button>
+          </form>
+        </section>
+
+        <aside class="question-panel" aria-labelledby="question-title">
+          <div class="section-header">
+            <h2 id="question-title">问题库</h2>
+            <span id="question-count" class="status-chip">0</span>
           </div>
-          <button id="clear-chat" class="tool-button" type="button">
-            <i data-lucide="rotate-ccw"></i>
-            <span>清空</span>
-          </button>
-        </header>
-
-        <div id="chat-provider-switcher" class="chat-provider-switcher" role="tablist" aria-label="选择大模型"></div>
-
-        <div class="prompt-row" aria-label="快捷问题">
-          <button type="button" data-prompt="请用 CPST 空间解释网络综合征是什么。">CPST 概念</button>
-          <button type="button" data-prompt="网络综合征可能有哪些表现和风险信号？">表现信号</button>
-          <button type="button" data-prompt="如果想预防网络综合征，可以从哪些方面开始？">预防建议</button>
-          <button type="button" data-prompt="请结合资料说明恢复和干预思路。">恢复思路</button>
-        </div>
-
-        <section id="chat-log" class="chat-log" aria-live="polite"></section>
-
-        <form id="chat-form" class="composer">
-          <textarea
-            id="message-input"
-            name="message"
-            rows="3"
-            placeholder="输入你的问题..."
-            autocomplete="off"
-          ></textarea>
-          <button id="send-button" class="send-button" type="submit" aria-label="发送">
-            <i data-lucide="send-horizontal"></i>
-            <span>发送</span>
-          </button>
-        </form>
+          <label class="select-label" for="question-category">分类</label>
+          <select id="question-category" class="question-select"></select>
+          <div id="question-list" class="question-list"></div>
+        </aside>
       </main>
     </div>
   </body>

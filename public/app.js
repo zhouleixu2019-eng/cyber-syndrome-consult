@@ -6,14 +6,40 @@ const state = {
   currentController: null,
   currentPending: null,
   stopRequested: false,
+  questionCategory: "all",
 };
 
 const elements = {};
 
+const QUESTION_BANK = [
+  { category: "概念理解", text: "请用 CPST 空间解释网络综合征是什么。" },
+  { category: "概念理解", text: "网络综合征和普通的上网时间过长有什么区别？" },
+  { category: "概念理解", text: "网络综合征是否等同于网络成瘾？请简洁说明。" },
+  { category: "风险识别", text: "网络综合征可能有哪些早期表现和风险信号？" },
+  { category: "风险识别", text: "如何判断自己的网络使用已经影响学习、工作或生活？" },
+  { category: "风险识别", text: "如果离开手机或网络就焦虑，应该如何理解这种状态？" },
+  { category: "身体影响", text: "长时间上网可能带来哪些身体层面的影响？" },
+  { category: "身体影响", text: "网络使用和睡眠问题之间可能有什么关系？" },
+  { category: "身体影响", text: "如果出现视疲劳、颈肩不适，可以从哪些习惯开始调整？" },
+  { category: "心理认知", text: "网络综合征在思维和情绪空间中有哪些表现？" },
+  { category: "心理认知", text: "注意力下降和频繁刷短视频之间可能有什么关系？" },
+  { category: "心理认知", text: "如何减少网络反馈对情绪的影响？" },
+  { category: "社会关系", text: "网络综合征会怎样影响现实社交和家庭沟通？" },
+  { category: "社会关系", text: "如果现实社交减少但线上互动很多，应该如何平衡？" },
+  { category: "社会关系", text: "青少年网络使用问题中，家庭支持可以怎样发挥作用？" },
+  { category: "恢复干预", text: "请结合资料说明网络综合征的恢复和干预思路。" },
+  { category: "恢复干预", text: "如果想预防网络综合征，可以从哪些方面开始？" },
+  { category: "恢复干预", text: "请给出一个温和可执行的一周网络使用调整方案。" },
+  { category: "恢复干预", text: "什么时候应该考虑寻求专业医生或心理咨询师帮助？" },
+  { category: "恢复干预", text: "请从 Cyber、Physical、Social、Thinking 四个方面给出自我检查清单。" },
+];
+
 document.addEventListener("DOMContentLoaded", () => {
-  elements.providerList = document.querySelector("#provider-list");
   elements.modelStatus = document.querySelector("#model-status");
   elements.chatProviderSwitcher = document.querySelector("#chat-provider-switcher");
+  elements.questionCategory = document.querySelector("#question-category");
+  elements.questionList = document.querySelector("#question-list");
+  elements.questionCount = document.querySelector("#question-count");
   elements.qrCode = document.querySelector("#qr-code");
   elements.mobileUrl = document.querySelector("#mobile-url");
   elements.copyUrl = document.querySelector("#copy-url");
@@ -27,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
   elements.clearChat = document.querySelector("#clear-chat");
 
   bindEvents();
+  renderQuestionControls();
   loadConfig();
 });
 
@@ -54,11 +81,9 @@ function bindEvents() {
     setTimeout(() => elements.copyUrl.classList.remove("copied"), 900);
   });
 
-  document.querySelectorAll("[data-prompt]").forEach((button) => {
-    button.addEventListener("click", () => {
-      elements.input.value = button.dataset.prompt;
-      elements.input.focus();
-    });
+  elements.questionCategory.addEventListener("change", () => {
+    state.questionCategory = elements.questionCategory.value;
+    renderQuestionList();
   });
 }
 
@@ -107,12 +132,8 @@ function renderConfig() {
 }
 
 function renderProviderControls(providers) {
-  elements.providerList.innerHTML = providers
-    .map((provider) => providerButtonMarkup(provider, "side"))
-    .join("");
-
   elements.chatProviderSwitcher.innerHTML = providers
-    .map((provider) => providerButtonMarkup(provider, "chat"))
+    .map((provider) => providerButtonMarkup(provider))
     .join("");
 
   document.querySelectorAll("[data-provider]").forEach((button) => {
@@ -124,15 +145,14 @@ function renderProviderControls(providers) {
   });
 }
 
-function providerButtonMarkup(provider, place) {
+function providerButtonMarkup(provider) {
   const active = provider.id === state.provider;
   const configuredText = provider.configured ? "已配置" : `缺少 ${provider.missingKey}`;
-  const className = place === "chat" ? "model-switch-button" : "provider-option";
 
   return `
     <button
       type="button"
-      class="${className} ${active ? "active" : ""}"
+      class="model-switch-button ${active ? "active" : ""}"
       data-provider="${provider.id}"
       role="tab"
       aria-selected="${active}"
@@ -159,10 +179,47 @@ function renderProviderState() {
   elements.modelStatus.className = `status-chip ${provider.configured ? "ready" : "warn"}`;
 }
 
+function renderQuestionControls() {
+  const categories = ["all", ...new Set(QUESTION_BANK.map((item) => item.category))];
+  elements.questionCategory.innerHTML = categories
+    .map((category) => {
+      const label = category === "all" ? "全部问题" : category;
+      return `<option value="${escapeHtml(category)}">${escapeHtml(label)}</option>`;
+    })
+    .join("");
+  renderQuestionList();
+}
+
+function renderQuestionList() {
+  const questions =
+    state.questionCategory === "all"
+      ? QUESTION_BANK
+      : QUESTION_BANK.filter((item) => item.category === state.questionCategory);
+
+  elements.questionCount.textContent = `${questions.length} 个`;
+  elements.questionList.innerHTML = questions
+    .map(
+      (item) => `
+        <button type="button" class="question-button" data-question="${escapeHtml(item.text)}">
+          <span>${escapeHtml(item.category)}</span>
+          <strong>${escapeHtml(item.text)}</strong>
+        </button>
+      `,
+    )
+    .join("");
+
+  elements.questionList.querySelectorAll("[data-question]").forEach((button) => {
+    button.addEventListener("click", () => {
+      elements.input.value = button.dataset.question;
+      elements.input.focus();
+    });
+  });
+}
+
 function addWelcomeMessage() {
   addMessage(
     "assistant",
-    "你好，我会结合网络综合征资料回答。你可以直接描述困扰、想了解的概念，或让模型从 CPST 维度做分析。",
+    "你好，我会结合网络综合征资料回答。你可以直接描述困扰、从右侧问题库选择问题，或让模型从 CPST 维度做分析。",
   );
 }
 
